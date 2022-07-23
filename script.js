@@ -6,7 +6,9 @@ const blogs = {
 }
 
 function select() {
-    
+    if(document.getElementById('btn').classList.contains('disabled')) 
+        return
+    document.getElementById('btn').classList.add('disabled')
     function _selectBlog () {
         let keys = Object.keys(blogs)
         let randomKey = keys[Math.floor(Math.random() * keys.length)]
@@ -91,6 +93,10 @@ function select() {
     function redirectTo(url) {
         // console.log('url: ', url)
         window.location.href = url;
+        setTimeout(() => {
+            document.getElementById('btn').classList.remove('disabled')
+        }, 1000)
+        
     }
     
     const blogKey = _selectBlog()
