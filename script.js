@@ -4,11 +4,17 @@ const blogs = {
     'austinkleon': 'https://austinkleon.com',
     'sethgodin': 'https://seths.blog',
 }
+const PROXY = 'http://141.95.19.7:8888/'
 
 function select() {
     if(document.getElementById('btn').classList.contains('disabled')) 
         return
     document.getElementById('btn').classList.add('disabled')
+    
+    const blogKey = _selectBlog()
+    _selectPostFromBlog(blogKey)
+
+    // utility functions for select:
     function _selectBlog () {
         let keys = Object.keys(blogs)
         let randomKey = keys[Math.floor(Math.random() * keys.length)]
@@ -19,7 +25,7 @@ function select() {
         let url = 'http://m.ganji.blog'
         
         if(blogKey === 'dereksivers') {
-            fetch(`https://sive.rs/blog`, {
+            fetch(`${PROXY}https://sive.rs/blog`, {
                 method: 'GET'
             })
             .then(response => response.text())
@@ -32,21 +38,18 @@ function select() {
                 postSuffix = posts.item(randUpTo(posts.length)).getAttribute('href')
                 
                 url = blogs.dereksivers + postSuffix
-                redirectTo(url)
+                _redirectTo(url)
             })
-            .catch(error => {
-                console.log('derek-sivers:error', error)
-                select(); // retry
-            });
+            .catch(error => _handleError(error, 'dereksivers'));
         
         } else if(blogKey === 'timurban') {
             url = 'https://waitbutwhy.com/random/'
-            redirectTo(url)
+            _redirectTo(url)
 
         } else if(blogKey === 'austinkleon') {
             const page = Math.floor(Math.random() * 100)
 
-            fetch(`https://austinkleon.com/page/${page}`, {
+            fetch(`${PROXY}https://austinkleon.com/page/${page}`, {
                 "body": null,
                 "method": "GET"
             })
@@ -57,17 +60,14 @@ function select() {
                 el.innerHTML = data;
                 const posts = el.querySelectorAll('.entry-title-link')
                 url = posts.item(randUpTo(posts.length)).getAttribute('href')
-                redirectTo(url)
+                _redirectTo(url)
             })
-            .catch(error => {
-                console.log('austin-kleon:error', error)
-                select(); // retry
-            });
+            .catch(error => _handleError(error, 'austinkleon'));
         
         } else if (blogKey === 'sethgodin') {
             const page = Math.floor(Math.random() * 100)
               
-            fetch(`https://seths.blog/page/${page}`, {
+            fetch(`${PROXY}https://seths.blog/page/${page}`, {
                 method: 'POST',
                 redirect: 'follow',
             })
@@ -79,18 +79,15 @@ function select() {
                 
                 const posts = el.querySelectorAll('div.post > h2 > a')
                 url = posts.item(randUpTo(posts.length)).getAttribute('href')
-                redirectTo(url)
+                _redirectTo(url)
 
             })
-            .catch(error => {
-                console.log('seth-godin:error', error)
-                select(); // retry
-            });
+            .catch(error => _handleError(error, 'sethgodin'));
         }
         return
     }
 
-    function redirectTo(url) {
+    function _redirectTo(url) {
         // console.log('url: ', url)
         window.location.href = url;
         setTimeout(() => {
@@ -98,9 +95,12 @@ function select() {
         }, 1000)
         
     }
-    
-    const blogKey = _selectBlog()
-    _selectPostFromBlog(blogKey)
+
+    function _handleError(error, name) {
+        // console.log(`${name}:error`, error)
+        document.getElementById('btn').classList.remove('disabled')
+        select(); // retry
+    }
 }
 
 function randUpTo(num) {
