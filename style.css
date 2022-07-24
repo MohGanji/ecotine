@@ -51,6 +51,7 @@ body {
     height: 30vh;
     /* width: 80vw; */
     padding: 5vh 10vw;
+    text-align: center;
     font-weight: bold;
     font-size: larger;
     /* background:rgba(31, 36, 46, 0.8); */
@@ -89,7 +90,7 @@ body {
     }
     #description {
         flex: 1;
-        min-height: 65vh;
+        min-height: 60vh;
         /* width: 80vw; */
         padding: 5vh 10vw;
         font-weight: normal;
@@ -97,6 +98,6 @@ body {
         /* background:rgba(31, 36, 46, 0.8); */
     }
     #button-container {
-        max-height: 30vh;
+        max-height: 35vh;
     }
 }
