@@ -9,7 +9,7 @@ const PROXY = 'http://141.95.19.7:8888/'
 function select() {
     if(document.getElementById('btn').classList.contains('disabled')) 
         return
-    document.getElementById('btn').classList.add('disabled')
+    _disableButton()
     
     const blogKey = _selectBlog()
     _selectPostFromBlog(blogKey)
@@ -91,9 +91,18 @@ function select() {
         // console.log('url: ', url)
         window.location.href = url;
         setTimeout(() => {
-            document.getElementById('btn').classList.remove('disabled')
-        }, 1000)
+            _enableButton()
+        }, 1500)
         
+    }
+
+    function _disableButton() {
+        document.getElementById('btn').classList.add('disabled')
+        document.getElementById('btn-text').innerText = "Wait..."
+    }
+    function _enableButton() {
+        document.getElementById('btn').classList.remove('disabled')
+        document.getElementById('btn-text').innerText = "Take Me Somewhere"
     }
 
     function _handleError(error, name) {
