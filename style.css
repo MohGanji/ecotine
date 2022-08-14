@@ -71,7 +71,7 @@ body {
     background:rgba(31, 36, 46, 0.8);
 }
 
-#btn {
+#go-btn {
     font-weight: bolder;
     font-size: xx-large; 
     width: 40vw;
@@ -88,7 +88,7 @@ body {
 }
 
 @media screen and (max-width: 700px) {
-    #btn {
+    #go-btn {
         font-weight: bold;
         font-size: x-large; 
         width: 80vw;
