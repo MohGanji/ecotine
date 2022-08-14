@@ -23,6 +23,10 @@ function select() {
     if(document.getElementById('go-btn').classList.contains('disabled')) 
         return
     _disableButton()
+    gtag('event', 'bf-click', {
+        'event_category' : 'bf-button-clicks',
+        'event_label' : 'bf-go-btn'
+    });
     
     const DEBUG_BLOG = null
     const blogKey = DEBUG_BLOG || _selectBlog()
