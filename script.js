@@ -75,17 +75,17 @@ function _redirectTo(url) {
 }
 
 function _disableButton() {
-    document.getElementById('btn').classList.add('disabled')
+    document.getElementById('go-btn').classList.add('disabled')
     document.getElementById('btn-text').innerText = "Wait..."
 }
 function _enableButton() {
-    document.getElementById('btn').classList.remove('disabled')
+    document.getElementById('go-btn').classList.remove('disabled')
     document.getElementById('btn-text').innerText = "Take Me Somewhere"
 }
 
 function _handleError(error, name) {
     console.log(`${name}:error`, error)
-    document.getElementById('btn').classList.remove('disabled')
+    document.getElementById('go-btn').classList.remove('disabled')
     select(); // retry
 }
 
@@ -94,7 +94,6 @@ function randUpTo(num) {
 }
 
 function debugcss() {
-    console.log('shit ps')
     var elements = document.body.getElementsByTagName('*');
     var items = [];
     for (var i = 0; i < elements.length; i++) {
