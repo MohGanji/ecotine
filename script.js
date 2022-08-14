@@ -20,7 +20,7 @@ var blogs = {
 var PROXY = 'http://141.95.19.7:8888/'
 
 function select() {
-    if(document.getElementById('btn').classList.contains('disabled')) 
+    if(document.getElementById('go-btn').classList.contains('disabled')) 
         return
     _disableButton()
     
