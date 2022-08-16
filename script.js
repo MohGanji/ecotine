@@ -12,26 +12,25 @@ var blogs = {
     'neilstrauss': () => fetchPostWithPagination('https://www.neilstrauss.com/blog/page', 'a.more-link', 50),
     'timferris': () => fetchPostWithPagination('https://tim.blog/page', 'h3.entry-title > a', 100),
     'ericbarker': () => fetchPostWithPagination('https://bakadesuyo.com/blog/page', 'h4 > a', 7),
-    'walkingtheworld': () => fetchPostFullArchive('https://walkingtheworld.substack.com/archive', 'a.post-preview-title'),
+    // 'walkingtheworld': () => fetchPostFullArchive('https://walkingtheworld.substack.com/archive', 'a.post-preview-title'), // has paid posts
     'tannergreer': () => fetchPostFullArchive('https://scholars-stage.org/scholars-stage-read-more/', 'li > a'),
     'smtm': () => fetchPostFullArchive('https://slimemoldtimemold.com/archives/', 'li > a'),
     'paco': () => fetchPostFullArchive('https://thehellyeahgroup.com/archive', 'a.archive-item-link', 'https://thehellyeahgroup.com'),
-    // 'thankyouforthedays': () => fetchPostWithPagination('https://thankyouforthedays.co.uk/page', 'h2 > a', 4),
-    // 'mrmoneymustache': () => fetchPostWithPagination('https://www.mrmoneymustache.com/blog/page', 'h2 > a', 40),
+    'mrmoneymustache': () => fetchPostWithPagination('https://www.mrmoneymustache.com/blog/page', 'h2 > a', 40),
 
 }
 var PROXY = 'http://141.95.19.7:8888/'
 
-function select() {
+function select(retry = false) {
     if(document.getElementById('go-btn').classList.contains('disabled')) 
         return
     _disableButton()
     
-    const DEBUG_BLOG = null
+    const DEBUG_BLOG = 'mrmoneymustache'
     const blogKey = DEBUG_BLOG || _selectBlog()
     return gtag('event', 'bf_go_click', {
         'event_callback': createFunctionWithTimeout(() => {
-            addReadCount(blogKey)
+            if(!retry) addReadCount(blogKey)
             blogs[blogKey]()
         }, 500)
     });
@@ -94,7 +93,7 @@ function _enableButton() {
 function _handleError(error, name) {
     console.log(`${name}:error`, error)
     document.getElementById('go-btn').classList.remove('disabled')
-    select(); // retry
+    select(true); // retry
 }
 
 function randUpTo(num) {
@@ -123,7 +122,7 @@ function refreshStats() {
     // Posts read
     let readCntStr = localStorage.getItem(C_READ_CNT_KEY) || '0'
     document.getElementById('posts-read-cnt').innerText = readCntStr
-    let postsReadUrl = generateTwitterShareUrl(`I landed on ${readCntStr} blog posts with blogfrog.xyz so far.\nStart hopping!\n`, ['blogfrog'])
+    let postsReadUrl = generateTwitterShareUrl(`I landed on ${readCntStr} blog posts with blogfrog.xyz so far.\nStart hopping!\n\n`, ['blogfrog'])
     console.log(postsReadUrl)
     document.getElementById('twitter-posts-read').setAttribute('href', postsReadUrl) 
     
@@ -131,7 +130,7 @@ function refreshStats() {
     let blogsStr = localStorage.getItem(C_BLOGS_KEY) || '[]'
     let blogsCnt = JSON.parse(blogsStr).length
     document.getElementById('blogs-discovered-cnt').innerText = blogsCnt
-    let blogsDiscoveredUrl = generateTwitterShareUrl(`I discovered ${blogsCnt} new blogs using blogfrog.xyz.\nStart hopping!\n`, ['blogfrog'])
+    let blogsDiscoveredUrl = generateTwitterShareUrl(`I discovered ${blogsCnt} new blogs using blogfrog.xyz.\nStart hopping!\n\n`, ['blogfrog'])
     document.getElementById('twitter-blogs-discovered').setAttribute('href', blogsDiscoveredUrl) 
     
 }
