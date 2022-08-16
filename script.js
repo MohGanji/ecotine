@@ -23,11 +23,14 @@ function select() {
     if(document.getElementById('go-btn').classList.contains('disabled')) 
         return
     _disableButton()
-    gtag('event', 'bf-go-click');
     
     const DEBUG_BLOG = null
     const blogKey = DEBUG_BLOG || _selectBlog()
-    return blogs[blogKey]()
+    return gtag('event', 'bf_go_click', {
+        'event_callback': createFunctionWithTimeout(() => {
+            blogs[blogKey]()
+        }, 500)
+    });
 
     // utility functions for select:
     function _selectBlog () {
@@ -94,6 +97,38 @@ function randUpTo(num) {
     return Math.floor(Math.random() * num)
 }
 
+///// ANALYTICS
+
+function handleWebsiteClick() {
+    return gtag('event', 'bf_website_click', {
+        'event_callback': createFunctionWithTimeout(
+            () => { window.location.href = 'http://m.ganji.blog';},
+            500
+        )
+    });
+}
+function handleContactClick() {
+    return gtag('event', 'bf_contact_click', {
+        'event_callback': createFunctionWithTimeout(
+            () => { window.location.href = 'mailto:mohganji97@gmail.com';},
+            500
+        )
+    });
+}
+
+function createFunctionWithTimeout(callback, opt_timeout) {
+    var called = false;
+    function fn() {
+      if (!called) {
+        called = true;
+        callback();
+      }
+    }
+    setTimeout(fn, opt_timeout || 1000);
+    return fn;
+  }
+
+///// FOR DEBUGGING
 function debugcss() {
     var elements = document.body.getElementsByTagName('*');
     var items = [];
