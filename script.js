@@ -16,6 +16,9 @@ var blogs = {
     'tannergreer': () => fetchPostFullArchive('https://scholars-stage.org/scholars-stage-read-more/', 'li > a'),
     'smtm': () => fetchPostFullArchive('https://slimemoldtimemold.com/archives/', 'li > a'),
     'paco': () => fetchPostFullArchive('https://thehellyeahgroup.com/archive', 'a.archive-item-link', 'https://thehellyeahgroup.com'),
+    // 'thankyouforthedays': () => fetchPostWithPagination('https://thankyouforthedays.co.uk/page', 'h2 > a', 4),
+    // 'mrmoneymustache': () => fetchPostWithPagination('https://www.mrmoneymustache.com/blog/page', 'h2 > a', 40),
+
 }
 var PROXY = 'http://141.95.19.7:8888/'
 
@@ -28,6 +31,7 @@ function select() {
     const blogKey = DEBUG_BLOG || _selectBlog()
     return gtag('event', 'bf_go_click', {
         'event_callback': createFunctionWithTimeout(() => {
+            addReadCount(blogKey)
             blogs[blogKey]()
         }, 500)
     });
@@ -95,6 +99,50 @@ function _handleError(error, name) {
 
 function randUpTo(num) {
     return Math.floor(Math.random() * num)
+}
+
+
+///// STATS
+var C_BLOGS_KEY = 'BF__BLOGS'
+var C_READ_CNT_KEY =  'BF__READ_CNT'
+
+function addReadCount(blogName, postUrl) {
+    // increase read count
+    let readCntStr = localStorage.getItem(C_READ_CNT_KEY) || '0'
+    localStorage.setItem(C_READ_CNT_KEY, `${+readCntStr + 1}`)
+    
+    // add blog to discovered blogs if not there.
+    let blogsStr = localStorage.getItem(C_BLOGS_KEY) || '[]'
+    let blogs = new Set(JSON.parse(blogsStr))
+    blogs.add(blogName)
+    localStorage.setItem(C_BLOGS_KEY, JSON.stringify(Array.from(blogs)))
+    // refreshStats()
+}
+
+function refreshStats() { 
+    // Posts read
+    let readCntStr = localStorage.getItem(C_READ_CNT_KEY) || '0'
+    document.getElementById('posts-read-cnt').innerText = readCntStr
+    let postsReadUrl = generateTwitterShareUrl(`I landed on ${readCntStr} blog posts with blogfrog.xyz so far.\nStart hopping!\n`, ['blogfrog'])
+    console.log(postsReadUrl)
+    document.getElementById('twitter-posts-read').setAttribute('href', postsReadUrl) 
+    
+    // Blogs discovered
+    let blogsStr = localStorage.getItem(C_BLOGS_KEY) || '[]'
+    let blogsCnt = JSON.parse(blogsStr).length
+    document.getElementById('blogs-discovered-cnt').innerText = blogsCnt
+    let blogsDiscoveredUrl = generateTwitterShareUrl(`I discovered ${blogsCnt} new blogs using blogfrog.xyz.\nStart hopping!\n`, ['blogfrog'])
+    document.getElementById('twitter-blogs-discovered').setAttribute('href', blogsDiscoveredUrl) 
+    
+}
+// Run this once after page load.
+document.onload = refreshStats()
+
+function generateTwitterShareUrl(text, hashtags) {
+    const BASE_URL = "https://twitter.com/intent/tweet"
+    const encodedText = encodeURIComponent(text)
+    const hashtagsStr = hashtags.join(',')
+    return `${BASE_URL}?text=${encodedText}&hashtags=${hashtagsStr}`
 }
 
 ///// ANALYTICS

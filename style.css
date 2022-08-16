@@ -58,7 +58,7 @@ body {
 }
 #button-container {
     flex: 8;
-    height: 65vh;
+    height: 30vh;
     margin: 0 auto;
 }
 #footer {
@@ -87,6 +87,37 @@ body {
     pointer-events: none;
 }
 
+#stats-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 35vh;
+    margin: 0 auto;
+    width: 40vw;
+    font-weight: bold;
+    font-size: large; 
+}
+
+.share-item {
+    max-width: 20vw;
+    
+}
+share-item > div {
+    height: 28px;
+    line-height: 28px;
+}
+.share-item > div {
+    margin: 0px 4px 8px 4px;
+}
+.share-item > div, span {
+    vertical-align: top;
+}
+
+.colorize {
+    color: #26d926;
+    font-weight: bold;
+}
+
 @media screen and (max-width: 700px) {
     #go-btn {
         font-weight: bold;
@@ -95,7 +126,7 @@ body {
     }
     #description {
         flex: 1;
-        min-height: 60vh;
+        min-height: 50vh;
         /* width: 80vw; */
         padding: 5vh 10vw;
         font-weight: normal;
@@ -103,7 +134,26 @@ body {
         /* background:rgba(31, 36, 46, 0.8); */
     }
     #button-container {
-        max-height: 35vh;
+        height: 20vh;
+    }
+    #stats-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        max-height: 25vh;
+        margin: 0 auto;
+        width: 80vw;
+        text-align: center;
+    }
+    .share-item {
+        max-width: unset;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .share-item > div {
+        display: inline;
+        margin: 0px 4px 8px 4px;
     }
     #footer {
         padding-left: 0;
