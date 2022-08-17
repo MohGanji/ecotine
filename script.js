@@ -26,7 +26,7 @@ function select(retry = false) {
         return
     _disableButton()
     
-    const DEBUG_BLOG = 'mrmoneymustache'
+    const DEBUG_BLOG = null
     const blogKey = DEBUG_BLOG || _selectBlog()
     return gtag('event', 'bf_go_click', {
         'event_callback': createFunctionWithTimeout(() => {
