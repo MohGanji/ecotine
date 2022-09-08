@@ -1,10 +1,9 @@
 var blogs = {
-    'dereksivers': () => fetchPostFullArchive('https://sive.rs/blog', 'li > a', 'https://sive.rs'),
+    'dereksivers': () => fetchPostWithRandomUrl('https://sive.rs/random'),
     'timurban': () => fetchPostWithRandomUrl('https://waitbutwhy.com/random/'),
     'austinkleon': () => fetchPostWithPagination('https://austinkleon.com/page', '.entry-title-link', 100),
     'sethgodin': () => fetchPostWithPagination('https://seths.blog/page', 'div.post > h2 > a', 100),
     'lyndabarry': () => fetchPostWithRandomUrl('https://thenearsightedmonkey.tumblr.com/random'),
-    'dereksiversbooks': () => fetchPostFullArchive('https://sive.rs/books', 'div > h2 > a', 'https://sive.rs'),
     'markmanson': () => fetchPostFullArchive('https://markmanson.net/archive', '.archive-table td > a', 'https://markmanson.net'),
     'ryanholiday': () => fetchPostFullArchive('https://ryanholiday.net/archive/', '#smart-archives-list li > a'),
     'stevenpressfield': () => fetchPostWithPagination('https://stevenpressfield.com/blog/page', 'h2 > a', 100),
@@ -16,8 +15,22 @@ var blogs = {
     'tannergreer': () => fetchPostFullArchive('https://scholars-stage.org/scholars-stage-read-more/', 'li > a'),
     'smtm': () => fetchPostFullArchive('https://slimemoldtimemold.com/archives/', 'li > a'),
     'paco': () => fetchPostFullArchive('https://thehellyeahgroup.com/archive', 'a.archive-item-link', 'https://thehellyeahgroup.com'),
-    'mrmoneymustache': () => fetchPostWithPagination('https://www.mrmoneymustache.com/blog/page', 'h2 > a', 40),
-
+    'mrmoneymustache': () => fetchPostWithRandomUrl('https://www.mrmoneymustache.com/?random&post_type=post&post_status=publish'),
+    'lawrenceweschler': () => fetchPostFullArchive('https://lawrenceweschler.com/library/archive', 'p > a'),
+    'onstartups': () => fetchPostWithPagination('https://www.onstartups.com/page', 'a.post__link', 50),
+    'dharmesh': () => fetchPostWithPagination('https://blog.hubspot.com/marketing/author/dharmesh-shah/page', 'h3.blog-card__content-title > a', 6),
+    'unsettle': () => fetchPostWithPagination('https://www.unsettle.org/page', 'div.col-inner > a', 19),
+    'nofreakingspeaking': () => fetchPostWithPagination('https://nofreakingspeaking.com/blog/page', 'h4 > a', 9),
+    // 'paulsmith': () => fetchPostWithPagination('https://leadwithastory.com/blog/page', 'h3.entry-title > a', 12),
+    'jnforensics': () => fetchPostWithPagination('https://www.jnforensics.com/blog-1/page', 'div.blog-post-homepage-link-hashtag-hover-color > a', 3),
+    'pragmaticengineer': () => fetchPostWithPagination('https://blog.pragmaticengineer.com/page', 'article a', 2, 'https://blog.pragmaticengineer.com'),
+    'doyouevenblog': () => fetchPostWithPagination('https://doyouevenblog.com/blog/page', 'a.elementor-post__thumbnail__link', 39),
+    'budgetsaresexy': () => fetchPostWithPagination('https://budgetsaresexy.com/page', 'h2 > a', 300),
+    // 'neildegrasstyson': () => fetchPostFullArchive('https://www.haydenplanetarium.org/tyson/essays/index.php', 'li > a', 'https://www.haydenplanetarium.org/tyson/essays'), // 403 error, probably .php is different.
+    'copyblogger': () => fetchPostWithPagination('https://copyblogger.com/page', 'a.entry-title-link', 240),
+    // 'exphistory': () => fetchPostFullArchive('https://experimentalhistory.substack.com/archive', 'TODO: write function for substack API'),
+    // 'brianchesky': () => fetchPostFullArchive('https://medium.com/@bchesky', 'TODO: write function for medium API'),
+    // 'thefreelancewrtierguide': () => fetchPostFullArchive('https://www.thefreelancewritersguide.com/blog?offset=1606280400632', 'TODO: find a solution for offset(graphQL like) pagination'),
 }
 var PROXY = 'http://141.95.19.7:8888/'
 
@@ -97,7 +110,7 @@ function _handleError(error, name) {
 }
 
 function randUpTo(num) {
-    return Math.floor(Math.random() * num)
+    return Math.floor(Math.random() * num) + 1
 }
 
 
