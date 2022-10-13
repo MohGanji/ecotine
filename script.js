@@ -162,7 +162,7 @@ function generateTwitterShareUrl(text, hashtags) {
 function handleWebsiteClick() {
     return gtag('event', 'bf_website_click', {
         'event_callback': createFunctionWithTimeout(
-            () => { window.location.href = 'http://m.ganji.blog';},
+            () => { window.location.href = 'http://ganji.blog';},
             500
         )
     });
