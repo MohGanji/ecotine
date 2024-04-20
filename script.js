@@ -9,6 +9,7 @@ var blogs = {
     'strangestloop': () => fetchPostFullArchive('https://strangestloop.io/essays/', 'a.essay-header-content-link', 'https://strangestloop.io'),
     'elmaghri': () => fetchPostFullArchive('https://www.elmghari.com/blog', 'li > article > div > div > h3 > a', 'https://www.elmghari.com'),
     'visa1000': () => fetchPostFullArchive('https://visakanv.com/1000/', 'a.entry-wrap'),
+    'levelsio': () => fetchPostFullArchive('https://levels.io/blog/', 'div.postindex-title > a', 'https://levels.io'),
     'stevenpressfield': () => fetchPostWithPagination('https://stevenpressfield.com/blog/page', 'h2 > a', 100),
     'vv': () => fetchPostWithPaginationQueryParam('https://visualizevalue.com/blogs/visuals', 'div.blog-item__title-holder > a', 4, 'https://visualizevalue.com', 'page'),
     'amandaaskell': () => fetchPostWithPagination('https://www.askell.blog/page/', 'article > a.u-permalink', 4, 'https://www.askell.blog/'),
