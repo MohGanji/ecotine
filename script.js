@@ -10,6 +10,7 @@ var blogs = {
     'elmaghri': () => fetchPostFullArchive('https://www.elmghari.com/blog', 'li > article > div > div > h3 > a', 'https://www.elmghari.com'),
     'visa1000': () => fetchPostFullArchive('https://visakanv.com/1000/', 'a.entry-wrap'),
     'stevenpressfield': () => fetchPostWithPagination('https://stevenpressfield.com/blog/page', 'h2 > a', 100),
+    'vv': () => fetchPostWithPaginationQueryParam('https://visualizevalue.com/blogs/visuals', 'div.blog-item__title-holder > a', 4, 'https://visualizevalue.com', 'page'),
     'amandaaskell': () => fetchPostWithPagination('https://www.askell.blog/page/', 'article > a.u-permalink', 4, 'https://www.askell.blog/'),
     // 'annieduke': () => fetchPostWithPagination('https://www.annieduke.com/tag/article/page', 'a.elementor-post__read-more', 5), // Something goes wrong when proxy
     'neilstrauss': () => fetchPostWithPagination('https://www.neilstrauss.com/blog/page', 'a.more-link', 50),
@@ -63,6 +64,12 @@ function select(retry = false) {
 function fetchPostWithPagination(blogUrl, selector, maxPage, prefixUrl = '') {
     const page = Math.floor(Math.random() * maxPage)
     const blogPageUrl = `${blogUrl}/${page}`
+    fetchPostFullArchive(blogPageUrl, selector, prefixUrl)
+}
+
+function fetchPostWithPaginationQueryParam(blogUrl, selector, maxPage, prefixUrl = '', queryParamName) {
+    const page = Math.floor(Math.random() * maxPage)
+    const blogPageUrl = `${blogUrl}?${queryParamName}=${page}`
     fetchPostFullArchive(blogPageUrl, selector, prefixUrl)
 }
 
